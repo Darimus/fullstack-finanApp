@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentação da aplicação",
+    "description": "API da aplicação de financeira",
+    "version": "1.0.0",
+    "contact": {
+      "email": "contato@brunopassos.dev"
+    }
+  },
+  "paths": {
+    "/user": {  
+      "post": {
+        "tags": ["Users"],
+        "summary": "Cria um usuário",
+        "description": "Cria um novo usuário no banco de dados",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "user": "nome do usário",
+                  "password": "sua senha"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso"
+          },
+          "500": {
+            "description": "Nome de usuário já existente"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Lista todos os usuários",
+        "description": "Lista todos os usuários cadastrados no banco",
+        "responses": {
+          "200": {
+            "description": "sucesso ao listar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "user": {
+                        "type": "string"
+                      },
+                      "password": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
