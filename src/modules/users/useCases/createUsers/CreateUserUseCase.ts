@@ -1,9 +1,11 @@
-import { inject, injectable } from "tsyringe/dist/typings/decorators";
+import { inject, injectable } from "tsyringe";
+import { hash } from "bcryptjs";
 import { IUserRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
   user: string;
   password: string;
+  email: string;
 }
 
 @injectable()
@@ -13,14 +15,17 @@ class CreateUsersUseCase {
     private userRepository: IUserRepository) {
   }
 
-  async execute({ user, password }: IRequest): Promise<void> {
+  async execute({ user, password, email }: IRequest): Promise<void> {
     const userAlreadyExists = await this.userRepository.findByName(user);
+    const userEmailAlreadyExists = await this.userRepository.findByEmail(email);
 
-    if (userAlreadyExists) {
-      throw new Error("Usuario já existente.");
+    const passwordHash = await hash(password, 8);
+
+    if (userAlreadyExists || userEmailAlreadyExists) {
+      throw new Error("Usuario ou email já existente.");
     }
 
-    this.userRepository.create({ user, password });
+    this.userRepository.create({ user, password: passwordHash, email });
   }
 }
 
