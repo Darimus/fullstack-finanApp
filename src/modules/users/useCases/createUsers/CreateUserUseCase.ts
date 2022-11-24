@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { hash } from "bcryptjs";
 import { IUserRepository } from "../../repositories/IUsersRepository";
+import { AppError } from "@errors/AppError";
 
 interface IRequest {
   user: string;
@@ -22,7 +23,7 @@ class CreateUsersUseCase {
     const passwordHash = await hash(password, 8);
 
     if (userAlreadyExists || userEmailAlreadyExists) {
-      throw new Error("Usuario ou email já existente.");
+      throw new AppError("Usuario ou email já existente.");
     }
 
     this.userRepository.create({ user, password: passwordHash, email });

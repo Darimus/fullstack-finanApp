@@ -5,6 +5,7 @@ import { IUserRepository } from "../IUsersRepository";
 
 class UsersRepository implements IUserRepository {
 
+
   private repository: Repository<Users>;
 
   constructor() {
@@ -34,6 +35,11 @@ class UsersRepository implements IUserRepository {
 
   async findByEmail(email: string): Promise<Users> {
     const users = await this.repository.findOne({ email })
+    return users;
+  }
+
+  async findById(id: string): Promise<Users> {
+    const users = await this.repository.findOne(id)
     return users;
   }
 }
