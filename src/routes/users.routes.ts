@@ -1,4 +1,4 @@
-import { application, Router } from 'express';
+import { Router } from 'express';
 import { ListUsersController } from '@modules/users/useCases/listUsers/ListUsersController';
 import { CreateUsersController } from '../modules/users/useCases/createUsers/CreateUsersController';
 import { ensureAuthenticated } from 'middlewares/ensureAuthenticated';
