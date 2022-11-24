@@ -1,5 +1,5 @@
 import { Users } from "../entities/Users";
-import { ICreateUsersDTO } from "../dtos/ICreateUsersDTO";
+import { ICreateUsersDTO } from "../../dtos/ICreateUsersDTO";
 
 interface IUserRepository {
   findByName(user: string): Promise<Users>
