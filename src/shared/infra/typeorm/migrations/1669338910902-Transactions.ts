@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateUsers1669153839575 implements MigrationInterface {
+export class Transactions1669338910902 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table(
                 {
-                    name: "Users",
+                    name: "Transactions",
                     columns: [
                         {
                             name: "id",
@@ -14,21 +14,18 @@ export class CreateUsers1669153839575 implements MigrationInterface {
                             isPrimary: true
                         },
                         {
-                            name: "user",
-                            type: "varchar",
-                            isUnique: true
+                            name: "debitedAccountId",
+                            type: "numeric",
+                            isNullable: true
                         },
                         {
-                            name: "password",
-                            type: "varchar",
+                            name: "creditedAccountId",
+                            type: "numeric",
+                            isNullable: true
                         },
                         {
-                            name: "email",
+                            name: "value",
                             type: "varchar"
-                        },
-                        {
-                            name: "accountID",
-                            type: "uuid"
                         },
                         {
                             name: "created_at",
@@ -38,10 +35,10 @@ export class CreateUsers1669153839575 implements MigrationInterface {
                     ],
                     foreignKeys: [
                         {
-                            name: "FKUsers",
-                            referencedTableName: "Users",
+                            name: "FKTransactions",
+                            referencedTableName: "Accounts",
                             referencedColumnNames: ["id"],
-                            columnNames: ["accountID"],
+                            columnNames: ["debitedAccountId", "creditedAccountId"],
                             onDelete: "SET NULL",
                             onUpdate: "SET NULL"
                         }
@@ -52,7 +49,8 @@ export class CreateUsers1669153839575 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("Users")
+        await queryRunner.dropTable("Transactions")
+
     }
 
 }
